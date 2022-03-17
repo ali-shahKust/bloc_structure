@@ -20,6 +20,7 @@ class _NowPlayingState extends State<NowPlaying> {
   PageController _pageController = PageController(
     initialPage: 0,
   );
+
   @override
   void initState() {
     playingMoviesBloc..getNowPlaying();
@@ -38,63 +39,60 @@ class _NowPlayingState extends State<NowPlaying> {
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: playingMoviesBloc.subject.stream,
-        builder: (context, AsyncSnapshot<MovieResponse> snapshot){
-          if(snapshot.hasData){
-            if(snapshot.data!.error.length >0 )
-            return Center(
-              child: Text(snapshot.data!.error),
-            );
+        builder: (context, AsyncSnapshot<MovieResponse> snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data!.error.length > 0)
+              return Center(
+                child: Text(snapshot.data!.error),
+              );
             else {
               return _movieWidget(snapshot.data);
             }
-          }
-          else {
+          } else {
             return Container();
           }
-
-    });
+        });
   }
 
   Widget _movieWidget(MovieResponse? data) {
     List<Movie> movies = data!.movies;
-    if(data.movies.isEmpty){
+    if (data.movies.isEmpty) {
       return Text("No Movie Found");
-    }
-    else {
+    } else {
       return PageIndicatorContainer(
         child: PageView.builder(
-            itemCount: movies.take(5).length, 
+            itemCount: movies.take(5).length,
             allowImplicitScrolling: true,
             controller: _pageController,
-            itemBuilder: (context, index){
-          return Stack(
-            
-            children: [
-              Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height/3.5,
-                  child: Image.network(imageBaseUrl+movies[index].poster,fit: BoxFit.cover,)),
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-
-                      begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [
-                      Color(0xff000000).withOpacity(1.0),
-                      Color(0xff00000).withOpacity(0.0),
-
-                    ]
+            itemBuilder: (context, index) {
+              return Stack(
+                children: [
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height / 3.5,
+                      child: Image.network(
+                        imageBaseUrl + movies[index].backPoster,
+                        fit: BoxFit.cover,
+                      )),
+                  Container(
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                            colors: [
+                          const Color(0xff000000).withOpacity(1.0),
+                          const Color(0xff00000).withOpacity(0.0),
+                        ])),
                   )
-                ),
-              )
-            ],
-          );
-        }), length: movies.take(5).length,
+                ],
+              );
+            }),
+        length: movies.take(5).length,
       );
     }
   }

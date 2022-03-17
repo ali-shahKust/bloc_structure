@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:youtube_downloader/widget/movie_list.dart';
 import 'package:youtube_downloader/widget/now_playing.dart';
 
 class MoviesScreen extends StatefulWidget {
@@ -15,16 +16,18 @@ class _MoviesScreenState extends State<MoviesScreen> {
       appBar: AppBar(
         title: const Text("Movies"),
       ),
-      body: SingleChildScrollView(
-        child:Column(
-          children: [
-            Container(
+      body: Column(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height/3.5,
+            child: const NowPlaying(),
+          ),
+          SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height/3.5,
-              child: const NowPlaying(),
-            )
-          ],
-        ),
+              height: MediaQuery.of(context).size.height/1.8,
+              child: MovieList())
+        ],
       ),
     );
   }

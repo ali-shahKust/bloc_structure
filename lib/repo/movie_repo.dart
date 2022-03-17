@@ -27,6 +27,7 @@ class MovieRepository {
     var params = {"api_key": apiKey, "language": "en-US", "page": page};
     try {
       Response response = await _dio.get(getMoviesApi, queryParameters: params);
+      print("Response Result ${response.data}");
       return MovieResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       return MovieResponse.withError("Error: $error, StackTrace: $stacktrace");
