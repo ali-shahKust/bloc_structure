@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:page_indicator/page_indicator.dart';
-import 'package:youtube_downloader/bloc/bloc_cons.dart';
+import 'package:youtube_downloader/cons/bloc_cons.dart';
 import 'package:youtube_downloader/model/movie.dart';
 import 'package:youtube_downloader/model/movie_response.dart';
-import 'package:youtube_downloader/repo/movie_const.dart';
+import 'package:youtube_downloader/cons/movie_const.dart';
 
 class NowPlaying extends StatefulWidget {
   const NowPlaying({Key? key}) : super(key: key);
